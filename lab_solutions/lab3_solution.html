@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>JS variable and function</title>
+        <script>
+            let count = 0;
+            
+            function countUp() {
+                count = count + 1;
+                showAlert();
+            }
+            function countDown() {
+                count--;
+                showAlert();
+            }
+            function showAlert() {
+                if (count % 5 == 0) {
+                    // Use template literals
+                    let msg = `Congrats! Count is ${count}, divisiable by 5!`
+                    alert(msg);
+                    //new Audio('resources/BecauseOfYou.mp3').play();
+                    disableButtons();
+                } else {
+                    alert(count);
+                }
+            }
+            function disableButtons() {
+                document.querySelector('#countUpButton').disabled = true
+                document.querySelector('#countDownButton').disabled = true
+            }
+
+        </script>
+    </head>
+    <body>
+        <p>We love counting!</p>
+        <button id="countUpButton" onclick="countUp()">CountUp</button>
+        <button id="countDownButton" onclick="countDown()">CountDown</button>
+    </body>
+</html>

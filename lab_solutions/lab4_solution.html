@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculator</title>
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const mathExpression = document.querySelector('#expression');
+        const expDisplay = document.querySelector('#exp');
+        const resultDisplay = document.querySelector('#result');
+
+        // Event delegation for button clicks
+        document.querySelector('#buttons').onclick = function(event) {
+            mathExpression.value += event.target.textContent;
+        };
+        
+        // Otherwise, we will have to use the following to deal with buttons one by one as:
+        // document.querySelector('#add').onclick = function() {
+        //     addToExpression('+');
+        // }
+        // document.querySelector('#sub').onclick = function() {
+        //     addToExpression('-');
+        // }
+
+        // Clear expression function
+        document.querySelector('#clear').onclick = function() {
+            mathExpression.value = '';
+            expDisplay.textContent = ''; // Best practice: textContent is preferred than innerHTML
+            resultDisplay.textContent = '';
+        }
+
+        // Delete last character function
+        document.querySelector('#delete').onclick = function() {
+            mathExpression.value = mathExpression.value.slice(0, -1);
+        }
+        
+
+        // Calculate result function
+        document.querySelector('#equal').onclick = function() {
+            const exp = mathExpression.value;
+            try {
+                const val = eval(exp);
+                mathExpression.value += `=${val}`;
+                expDisplay.textContent = `Expression is ${exp}`;
+                resultDisplay.textContent = `Result is ${val}`;
+            } catch (error) {
+                expDisplay.textContent = `Expression is ${exp}`;
+                resultDisplay.textContent = 'Error: invalid expression.';
+            }
+        }
+    });
+    </script>
+</head>
+<body>
+    <h2>Scientific Calculator</h2>
+    <label for="expression">Math:</label>
+    <input type="text" id="expression" autofocus placeholder="Enter expression">
+    <br>
+    <br>
+<div id="buttons">
+    <button>+</button>
+    <button>-</button>
+    <button>*</button>
+    <button>/</button>
+    <button>(</button>
+    <button>)</button>
+
+    <br>
+    <br>
+
+    <button>0</button>
+    <button>1</button>
+    <button>2</button>
+    <button>3</button>
+    <button>4</button>
+    <button>5</button>
+
+    <br>
+    <br>
+    <button>6</button>
+    <button>7</button>
+    <button>8</button>
+    <button>9</button>
+    <button>.</button>
+
+    <!-- line 72 to 85 can be also created by the following code, just for your information:
+    <script>
+        for (i = 0; i < 10; i++) {
+            document.querySelector('#buttons').innerHTML += '<button>' + i + '</button>';
+        }
+        document.querySelector('#buttons').innerHTML += '<button>' + '.' + '</button>';
+    </script>
+    -->
+</div>
+
+    <br>
+    <br>
+    <button id="delete">delete</button>
+    <button id="clear">clear</button>
+    <button id="equal">=</button>
+    <br>
+    <br>
+    <p id="exp"></p>
+    <p id="result"></p>
+</body>
+</html>
