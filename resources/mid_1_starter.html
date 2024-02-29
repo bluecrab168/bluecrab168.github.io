@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>JS variable and function</title>
+        <script>
+            function converter() {
+                let num = document.querySelector('#cad').value;
+                
+                if (!isNaN(num)) {
+                    let usDollar = (parseFloat(num)) * 0.74;
+                    usDollar = usDollar.toFixed(2);
+                    // You may need to add one line of code here
+                } else {
+                    document.querySelector('#us').textContent = "Invalid input";
+                }
+            }
+            document.addEventListener('DOMContentLoaded', function() {
+                // You may need to add one line of code here
+            });            
+        </script>
+    </head>
+    <body>
+        <p>CAD to US Dollars Converter</p>
+        <label>Candian dollars (CAD): </label>
+        <input type="text" id="cad" value="0"/>
+        <br>
+        <label>US dollars (US): </label>
+        <span id="us">0</span> 
+
+    </body>
+</html>
