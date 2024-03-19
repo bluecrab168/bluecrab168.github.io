@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            text-align: center;
+            font-size: 55px;
+        }
+
+        input {
+            font-size: 45px;
+        }
+
+        #win {
+            font-size: 75px;
+            color: green;
+        }
+    </style>
+</head>
+<body>
+    <div id="question"></div>
+    <input autofocus id="answer">
+    <div id="score">
+        <label>Score:</label> <span id="mark"></span>
+    </div>
+
+    <script>
+        let score = 0;
+        document.querySelector('#mark').textContent =  `${score}`;
+
+        function generateQuestion() {
+            const num1 = Math.floor(Math.random() * 100) + 1; // Generate a random number [1, 100]
+            const num2 = Math.floor(Math.random() * 100) + 1; // Generate a random number [1, 100]
+            document.querySelector('#question').textContent = `${num1} + ${num2}`;
+            return num1 + num2;
+        }
+        let sum = generateQuestion();
+        const ans = document.querySelector('#answer');
+        ans.onkeyup = function(event) {
+            if (event.key === 'Enter') {
+                if (parseInt(ans.value) === sum) {
+                    score += 1;
+                    document.querySelector('#question').style.color = 'black';
+                    if (score === 2) {
+                        document.body.innerHTML = '<div id="win"> You won! </div>';
+                        // document.body.style.fontSize = '75px';
+                        // document.body.style.color = 'green';
+                    } else {
+                        document.querySelector('#mark').textContent =  `${score}`;
+                        ans.value = "";
+                        sum = generateQuestion();
+                    }
+                    
+                } else {
+                    score -= 1;
+                    document.querySelector('#mark').textContent =  `${score}`;
+                    document.querySelector('#question').style.color = 'red';
+                }  
+            }
+        };
+
+    </script>
+</body>
+</html>

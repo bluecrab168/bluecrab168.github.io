@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <title>Add Game React</title>
+        <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+        <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+
+        <!-- Don't use this in production: -->
+        <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    
+        <style>
+            #root {
+                text-align: center;
+                font-size: 55px;
+            }
+
+            input {
+                font-size: 45px;
+            }
+
+            #win {
+            font-size: 75px;
+            color: green;
+        }
+        </style>
+    </head>
+    <body>
+        <div id="root"></div>
+
+        <script type="text/babel">
+            function MyApp() { // MyApp component
+                // const [num1, setNum1] = React.useState(10);
+                // const [num2, setNum2] = React.useState(20);
+                const [state, setState] = React.useState({ // object (similar to dict in Python)
+                    num1: Math.floor(Math.random() * 100) + 1,
+                    num2: Math.floor(Math.random() * 100) + 1,
+                    response: "",
+                    score: 0,
+                    questionColor: "black",
+                });
+
+                function handleChange() {
+                    setState({
+                        ...state,
+                        response: event.target.value,
+                    });
+                }
+                function handleKeyUp(event){
+                    if (event.key === "Enter") {
+                        const answer = parseInt(state.response);
+                        if (state.num1 + state.num2 === answer) {
+                            setState({
+                                num1: Math.floor(Math.random() * 100) + 1,
+                                num2: Math.floor(Math.random() * 100) + 1,
+                                response: "",
+                                score: state.score + 1,
+                                questionColor: "black",
+                            });
+                            // document.querySelector("#question").style.color = "black";
+                        } else {
+                            setState({
+                                ...state,
+                                score: state.score - 1,
+                                questionColor: "red",
+                            });
+                            // document.querySelector("#question").style.color = "red";
+                        }
+                    }
+                }
+
+                if (state.score === 2) {
+                    return (
+                        <div id="win">
+                            You won!
+                        </div>
+                    );
+                }
+
+                return (
+                    <div>
+                        <div id="question" style={{ color: state.questionColor }}>{state.num1} + {state.num2}</div>
+                        <input autoFocus onKeyUp={handleKeyUp} onChange={handleChange} value={state.response}/>
+                        <div>Score: {state.score}</div>
+                    </div>
+                );
+            }
+            const container = document.getElementById('root');
+            const root = ReactDOM.createRoot(container);
+            root.render(<MyApp />); // Best practice to use this Concurrent Mode
+        </script>
+  </body>
+</html>
+
+
+
+<!-- function handleKeyUp(event) {
+    setState({
+        ...state,
+        response: event.target.value,
+    });
+    if (event.key === "Enter") {
+        const answer = parseInt(state.response);
+        if (state.num1 + state.num2 === answer) {
+            setState({
+                num1: Math.floor(Math.random() * 100) + 1,
+                num2: Math.floor(Math.random() * 100) + 1,
+                response: "",
+                score: state.score + 1,
+            });
+        } else {
+            setState({
+                ...state,
+                score: state.score - 1,
+            });
+        }
+    }
+} -->
